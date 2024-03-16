@@ -10,7 +10,7 @@ class UsersTableSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run()
+    public function run(): void
     {
         \App\Models\User::factory(10)->create();
     }

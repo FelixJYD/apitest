@@ -13,5 +13,6 @@ class ExpensesTableSeeder extends Seeder
     public function run(): void
     {
         \App\Models\Expense::factory(20)->create();
+
     }
 }

@@ -2,25 +2,21 @@
 
 namespace Database\Factories;
 
+use App\Models\Income;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Income>
- */
 class IncomeFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
+    protected $model = Income::class;
+
+    public function definition()
     {
         return [
             'description' => $this->faker->sentence,
-            'amount' => $this->faker->randomFloat(2, 10, 500),
+            'amount' => $this->faker->numberBetween(10, 100),
             'date' => $this->faker->dateTimeBetween('-1 month', 'now')->format('Y-m-d'),
             'user_id' => \App\Models\User::factory(),
         ];
     }
 }
+

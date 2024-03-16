@@ -2,28 +2,31 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
     protected $fillable = ['name', 'email', 'password', 'total_balance'];
-    protected $visible = ['id', 'name', 'email', 'total_balance'];
+    use HasFactory;
 
-
-    public function incomes()
+    // Inicializa el atributo total_balance
+    protected static function boot()
     {
-        return $this->hasMany(Income::class);
-    }
+        parent::boot();
 
-    public function expenses()
-    {
-        return $this->hasMany(Expense::class);
+        static::creating(function ($user) {
+            $user->total_balance = 0; // Inicializa el total_balance en 0 al crear un nuevo usuario
+        });
     }
 
     // Mutador para actualizar el saldo total
     public function setTotalBalanceAttribute($value)
     {
-        // No sobrescribas el valor, agrega el nuevo valor al saldo existente
+        if (!isset($this->attributes['total_balance'])) {
+            $this->attributes['total_balance'] = 0;
+        }
+
         $this->attributes['total_balance'] += $value;
     }
 
